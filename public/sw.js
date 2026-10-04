@@ -1,6 +1,6 @@
 // Service worker: guarda a "casca" do app para abrir rápido e funcionar como app instalado.
 // Ao mudar arquivos, troque a versão abaixo para os celulares pegarem a atualização.
-const VERSAO = 'dnm-v1';
+const VERSAO = 'dnm-v2';
 const ARQUIVOS = ['./', 'index.html', 'agenda.html', 'css/app.css', 'js/config.js', 'js/vendor/supabase.js', 'js/db.js', 'js/app.js', 'js/agenda.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSAO).then(c => c.addAll(ARQUIVOS))); self.skipWaiting(); });
