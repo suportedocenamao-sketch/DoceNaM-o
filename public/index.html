@@ -25,10 +25,10 @@
 <nav class="bar" aria-label="Navegação">
   <div class="in">
     <button data-tab="hoje"><span class="ic">☀️</span>Hoje</button>
-    <button data-tab="pedidos"><span class="ic">🧾</span><span data-voc="plural">Encomendas</span></button>
+    <button data-tab="pedidos"><span class="ic">🧾<i class="dot" id="dotNovos" hidden></i></span><span data-voc="plural">Encomendas</span></button>
     <button class="fab" id="fab" aria-label="Nova encomenda"><span class="ic">+</span></button>
     <button data-tab="agenda"><span class="ic">📅</span>Agenda</button>
-    <button data-tab="relatorio"><span class="ic">📊</span>Relatório</button>
+    <button data-tab="mais"><span class="ic">☰</span>Mais</button>
   </div>
 </nav>
 
@@ -38,6 +38,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/vendor/supabase.js"></script>
+<script src="js/util.js"></script>
 <script src="js/db.js"></script>
 <script src="js/app.js"></script>
 </body>
