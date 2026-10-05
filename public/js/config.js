@@ -6,5 +6,6 @@ window.DNM_CONFIG = {
   SUPABASE_ANON_KEY: "sb_publishable_ErG3QY2lXaWRVz7US_DSpg_TPP2Cg2h",
   // Endereço público do site (usado no link da agenda que vai para os clientes).
   // Ex.: "https://docenamao.vercel.app". Vazio = usa o endereço atual do navegador.
-  SITE_URL: "https://docenamao.vercel.app"
+  SITE_URL: "https://docenamao.vercel.app",
+  SUPORTE_WHATSAPP: "61981998971"
 };
