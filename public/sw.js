@@ -1,7 +1,7 @@
 // Service worker: guarda a "casca" do app para abrir rápido e funcionar como app instalado.
 // Ao mudar arquivos, troque a versão abaixo para os celulares pegarem a atualização.
-const VERSAO = 'dnm-v10';
-const ARQUIVOS = ['./', 'index.html', 'agenda.html', 'meus-pedidos.html', 'css/app.css', 'js/vendor/supabase.js', 'js/util.js', 'js/db.js', 'js/app.js', 'js/agenda.js', 'js/meus-pedidos.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
+const VERSAO = 'dnm-v20';
+const ARQUIVOS = ['./', 'index.html', 'agenda.html', 'meus-pedidos.html', 'css/app.css', 'js/vendor/supabase.js', 'js/util.js', 'js/db.js', 'js/app.js', 'js/agenda.js', 'js/meus-pedidos.js', 'admin.html', 'js/admin.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSAO).then(c => c.addAll(ARQUIVOS)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSAO).map(k => caches.delete(k))))); self.clients.claim(); });

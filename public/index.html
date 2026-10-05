@@ -28,12 +28,15 @@
     <button data-tab="pedidos"><span class="ic">🧾<i class="dot" id="dotNovos" hidden></i></span><span data-voc="plural">Encomendas</span></button>
     <button class="fab" id="fab" aria-label="Nova encomenda"><span class="ic">+</span></button>
     <button data-tab="agenda"><span class="ic">📅</span>Agenda</button>
-    <button data-tab="mais"><span class="ic">☰</span>Mais</button>
+    <button data-tab="mais"><span class="ic">☰<i class="dot" id="dotMais" hidden></i></span>Mais</button>
   </div>
 </nav>
 
 <div class="sheet-bg" id="sheetBg"></div>
-<section class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><div id="sheetBody"></div></section>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-topo" id="sheetTopo"><div class="grab"></div><button class="sheet-x" id="sheetX" type="button" aria-label="Fechar">✕</button></div>
+  <div id="sheetBody"></div>
+</section>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="js/config.js"></script>

@@ -245,3 +245,82 @@ h3.grp{font:700 16px var(--head);color:var(--ink-2);margin:14px 0 6px;text-trans
 .timeline li.now{background:var(--go);color:#fff;font-weight:700}
 .lista-itens{list-style:none;padding:0;margin:6px 0}
 .lista-itens li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:14px}
+
+/* =================== v3 =================== */
+/* janela (sheet): barra de topo fixa com botão de fechar, arrastar para baixo */
+.sheet{padding-top:0;max-height:calc(100% - env(safe-area-inset-top,0px) - 16px);overscroll-behavior:contain}
+.sheet-topo{position:sticky;top:0;z-index:3;background:var(--bg);margin:0 -16px 6px;padding:10px 12px 6px;display:flex;align-items:center;justify-content:center;touch-action:none;border-radius:22px 22px 0 0}
+.sheet-topo .grab{margin:0}
+.sheet-x{position:absolute;right:12px;top:8px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--ink-2);font-size:15px;line-height:1;display:grid;place-items:center;box-shadow:0 1px 4px rgba(59,36,32,.08)}
+.sheet-x:active{transform:scale(.94)}
+body.sheet-aberta{overflow:hidden}
+.sh-title{font:800 24px/1.15 var(--head);margin:0 44px 2px 0}
+.sh-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-right:44px}
+.sh-head .sh-title{margin-right:0}
+
+/* agenda do dia */
+.dia-titulo{background:none;border:0;text-align:center;font-size:17px;padding:0}
+.etapas .chip{cursor:default;font-size:13px}
+.hora-bloco{margin-top:14px}
+.hora{font:800 18px var(--head);margin-bottom:6px;display:flex;align-items:baseline;gap:4px}
+.hora::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--rose);margin-right:6px}
+.ag-card{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:14px;padding:10px 10px 10px 12px;margin:0 0 8px 14px}
+.ag-card.st-confirmado,.ag-card.st-aguardando{border-left-color:#F2C57C}
+.ag-card.st-producao{border-left-color:#7FA7E8}
+.ag-card.st-pronto{border-left-color:var(--go)}
+.ag-card.st-entregue{opacity:.6;border-left-color:var(--line)}
+.ag-card.st-solicitado{border-left-color:var(--rose)}
+.ag-info{flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:2px}
+.ag-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.ag-st{font-size:12px;font-weight:700;color:var(--ink-2);white-space:nowrap}
+.producao summary{cursor:pointer;list-style:none}
+.producao summary::-webkit-details-marker{display:none}
+.producao[open] summary{margin-bottom:6px}
+
+/* cadastros */
+.grupo-card .g-top{display:flex;align-items:baseline;gap:8px}
+.grupo-card .g-top strong{flex:1}
+.subs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip.novo{border-style:dashed;color:var(--go)}
+.linha-cfg{display:flex;gap:8px;align-items:center;margin-top:8px}
+.linha-cfg .t{flex:1;padding:10px}
+.linha-cfg .t.curto{flex:0 0 84px}
+.linha-cfg input[type=checkbox]{width:20px;height:20px;accent-color:var(--go)}
+.pags{margin:2px 0 4px}
+.pag{display:flex;justify-content:space-between;align-items:center;font-size:14px;padding:4px 0}
+.estorno{color:var(--late);font-size:13px;padding:4px 0}
+
+/* anexos / inspirações */
+.anexos{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.anexo{position:relative;width:96px;display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink)}
+.anexo img{width:96px;height:96px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.anexo select{font-size:12px;padding:4px;border-radius:8px;border:1px solid var(--line);background:var(--paper)}
+.anexo .x{position:absolute;top:4px;right:4px;width:26px;height:26px;font-size:16px;background:rgba(255,255,255,.9)}
+.anexos.ver .anexo span{font-size:12px;text-align:center;color:var(--ink-2)}
+img.print{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:8px;display:block}
+
+/* público: formas de pagamento e resumo */
+.formas{display:flex;flex-direction:column;gap:8px}
+.forma{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.forma.on{border-color:var(--go);box-shadow:0 0 0 2px var(--go-soft)}
+.forma.on::before{content:'●';color:var(--go);margin-right:-2px}
+.resumo h3{font:700 18px var(--head)}
+.days.horas button{min-width:64px}
+
+/* suporte */
+.thread{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.bolha{max-width:88%;padding:10px 12px;border-radius:14px;background:var(--paper);border:1px solid var(--line)}
+.bolha p{margin:4px 0 0;font-size:15px}
+.bolha.cliente{align-self:flex-end;background:var(--rose-soft);border-color:transparent;border-bottom-right-radius:4px}
+.bolha.suporte{align-self:flex-start;border-bottom-left-radius:4px}
+
+/* administrador */
+body.adm .app{max-width:760px;padding-bottom:40px}
+.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+.mini-grid span{background:var(--bg);border-radius:10px;padding:6px;font-size:11px;color:var(--ink-2);text-align:center;line-height:1.2}
+.mini-grid b{display:block;font:800 18px var(--head);color:var(--ink)}
+.log{display:flex;flex-direction:column}
+.log-row{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log-row code{font-size:12px}
+a.iconbtn{text-decoration:none;color:var(--ink)}
+@media (max-width:420px){.mini-grid{grid-template-columns:repeat(2,1fr)}}

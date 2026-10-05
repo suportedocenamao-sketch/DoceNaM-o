@@ -6,5 +6,7 @@ window.DNM_CONFIG = {
   SUPABASE_ANON_KEY: "",
   // Endereço público do site (usado no link da agenda que vai para os clientes).
   // Ex.: "https://docenamao.vercel.app". Vazio = usa o endereço atual do navegador.
-  SITE_URL: ""
+  SITE_URL: "",
+  // WhatsApp do suporte (aparece em Mais > Suporte). Ex.: "61999990000". Vazio = só chamados.
+  SUPORTE_WHATSAPP: ""
 };

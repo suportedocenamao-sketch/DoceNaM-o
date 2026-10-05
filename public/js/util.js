@@ -29,7 +29,7 @@ const precoUn = (preco, un) => brl(preco) + '/' + (UNIDADES[un] || UNIDADES.un).
 const resumoItens = itens => itens.map(i => fmtQtd(i.qtd, i.un) + ' ' + i.desc).join(', ');
 
 /* status */
-const STATUS_NOMES = { solicitado: 'Pedido novo (agenda)', aguardando: 'Aguardando sinal', confirmado: 'Confirmado', producao: 'Em produção', entregue: 'Entregue', cancelado: 'Cancelado' };
+const STATUS_NOMES = { solicitado: 'Pedido novo (agenda)', aguardando: 'Aguardando sinal', confirmado: 'A fazer', producao: 'Em andamento', pronto: 'Pronto', entregue: 'Entregue', cancelado: 'Cancelado' };
 
 /* WhatsApp */
 const telWa = t => { const d = String(t || '').replace(/\D/g, ''); return d ? (d.startsWith('55') && d.length > 11 ? d : '55' + d) : ''; };
@@ -65,3 +65,43 @@ async function reduzirFoto(file, max = 900, q = 0.8) {
 
 function toast(m) { const t = $('#toast'); if (!t) return alert(m); t.textContent = m; t.classList.add('show'); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('show'), 2600); }
 function copiar(txt, msg) { try { navigator.clipboard.writeText(txt).then(() => toast(msg), () => prompt('Copie o texto:', txt)); } catch (e) { prompt('Copie o texto:', txt); } }
+
+/* ---------- entrega, pagamento e horários (mesma regra do servidor) ---------- */
+const PAGAMENTOS_PADRAO = [
+  { nome: 'Pix', taxa: 0, ativo: true }, { nome: 'Dinheiro', taxa: 0, ativo: true },
+  { nome: 'Cartão de débito', taxa: 1.99, ativo: true }, { nome: 'Cartão de crédito', taxa: 4.99, ativo: true }
+];
+function configCompleta(c) {
+  c = c || {};
+  const e = c.entrega || {};
+  return {
+    entrega: { retirada: e.retirada !== false, endereco_retirada: e.endereco_retirada || '', entrega: !!e.entrega,
+      taxa_padrao: Number(e.taxa_padrao || 0), regioes: Array.isArray(e.regioes) ? e.regioes.map(r => ({ nome: String(r.nome || ''), valor: Number(r.valor || 0) })).filter(r => r.nome) : [] },
+    pagamentos: Array.isArray(c.pagamentos) && c.pagamentos.length ? c.pagamentos.map(p => ({ nome: String(p.nome), taxa: Number(p.taxa || 0), ativo: p.ativo !== false })) : PAGAMENTOS_PADRAO.map(p => ({ ...p })),
+    horarios: { inicio: (c.horarios && c.horarios.inicio) || '09:00', fim: (c.horarios && c.horarios.fim) || '18:00', intervalo: Number((c.horarios && c.horarios.intervalo) || 60) }
+  };
+}
+/* taxa de entrega e da forma de pagamento sobre (produtos + entrega) */
+function calcTaxas(produtos, cfg, entrega, regiao, forma) {
+  let taxaEnt = 0;
+  if (entrega === 'entrega') {
+    const r = cfg.entrega.regioes.find(x => x.nome === regiao);
+    taxaEnt = cfg.entrega.regioes.length ? (r ? r.valor : 0) : cfg.entrega.taxa_padrao;
+  }
+  const pg = cfg.pagamentos.find(p => p.nome === forma && p.ativo);
+  const pct = pg ? Math.max(0, Math.min(30, pg.taxa)) : 0;
+  const taxaPag = r2((produtos + taxaEnt) * pct / 100);
+  return { taxaEnt: r2(taxaEnt), pct, taxaPag, total: r2(produtos + taxaEnt + taxaPag) };
+}
+function horariosDoDia(cfg) {
+  const h = cfg.horarios, m = s => { const [a, b] = String(s).split(':').map(Number); return a * 60 + (b || 0); };
+  const out = [], passo = Math.max(15, h.intervalo || 60);
+  for (let t = m(h.inicio); t <= m(h.fim); t += passo) out.push(pad(Math.floor(t / 60)) + ':' + pad(t % 60));
+  return out;
+}
+const fmtPct = v => numBR(v, 2) + '%';
+const quando = (data, hora) => (data ? fmtD(data) : '') + (hora ? ' às ' + hora : '');
+const fmtDataHora = s => { const d = new Date(s); return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+
+/* inspirações: escolher, reduzir e enviar fotos */
+const LEGENDAS = ['Topper', 'Bolo', 'Docinhos', 'Decoração', 'Embalagem', 'Outro'];
